@@ -1,21 +1,20 @@
 @keyframes start {
 	from {
-		top: -100px;
+		transform: translate(50%, -150%);
 	}
 	to {
-		top: 20px;
+		transform: translate(50%, 0);
 	}
 }
 
 @keyframes end {
 	from {
-		top: 20px;
+		transform: translate(50%, 0);
 	}
 	to {
-		top: -50px;
+		transform: translate(50%, -150%);
 	}
 }
-
 * {
 	margin: 0;
 	padding: 0;
@@ -61,7 +60,7 @@ h3,
 	gap: 0.5rem;
 	align-items: center;
 	animation-name: start;
-	animation-duration: 0.3s;
+	animation-duration: 0.4s;
 }
 
 .error {
@@ -349,6 +348,12 @@ footer a {
 
 footer a:hover {
 	color: #ffe17a;
+}
+@media (min-width: 1800px) {
+	#our-products,
+	#prices-text {
+		width: 50%;
+	}
 }
 
 @media (min-width: 1250px) {
