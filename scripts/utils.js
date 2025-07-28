@@ -5,19 +5,34 @@ export const toastType = {
 
 let running = false;
 
-function prepareToast(message, duration, type, img) {
+export function generateToast(toast, hasImage = true) {
+	if (hasImage) {
+		const img = getToastImage(toast);
+
+		img.onload = () => {
+			img.style.order = -1;
+			prepareToast(toast, img);
+		};
+		return;
+	}
+	prepareToast(toast);
+}
+
+function prepareToast(objToast, img) {
 	if (!running) {
 		running = true;
 		const toast = document.createElement("div");
 
 		toast.classList.add("toast");
-		toast.classList.add(type);
+		toast.classList.add(objToast.type);
 
 		const text = document.createElement("p");
-		text.innerText = message;
+		text.innerText = objToast.message;
 
 		toast.appendChild(text);
-		toast.appendChild(img);
+		if (img) {
+			toast.appendChild(img);
+		}
 
 		document.body.appendChild(toast);
 
@@ -27,19 +42,15 @@ function prepareToast(message, duration, type, img) {
 				document.body.removeChild(toast);
 				running = false;
 			});
-		}, duration);
+		}, objToast.duration);
 	}
 }
 
-export function generateToast(message, duration = 3000, type = toastType.SUCCESS) {
-	let img = new Image();
-
-	if (type === toastType.ERROR) {
+function getToastImage(toast) {
+	const img = new Image();
+	if (toast.type === toastType.ERROR) {
 		img.src = "./img/warning.svg";
 		img.alt = "ícone-alerta";
 	}
-	img.onload = () => {
-		img.style.order = -1;
-		prepareToast(message, duration, type, img);
-	};
+	return img;
 }
